@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake & Shapes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-layout">
+        <header id="gameHeader">
+            <div class="header-left">
+                <span class="header-label">Score</span>
+                <div id="currentScore">0</div>
+            </div>
+            <div class="header-center">
+                <div class="game-title">Snake & Shapes</div>
+            </div>
+            <div class="header-right">
+                <span class="header-label">High Score</span>
+                <div id="highScoreHeader">0</div>
+                <button id="soundToggle">🔊</button>
+            </div>
+        </header>
+
+        <div id="gameBoardContainer">
+            <div id="gameBoard">
+                <canvas id="gameCanvas" style="display:none;"></canvas>
+            </div>
+        </div>
+
+        <div id="ui">
+            <div>
+                <div class="label">Target</div>
+                <div id="target">...</div>
+            </div>
+            <div>
+                <div class="label">Score</div>
+                <div id="score">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menuRetro" style="display:flex;">
+        <div class="retro-frame">
+            <div class="retro-title">SNAKE & SHAPES</div>
+            <div class="retro-btn-group">
+                <button class="retro-btn" id="playBtn">PLAY</button>
+                <button class="retro-btn" id="exitBtn">EXIT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="restartDialog">
+        <div>
+            <div class="title">Game Over!</div>
+            <div class="message">Apakah Anda ingin memulai ulang permainan?</div>
+            <div class="actions">
+                <button id="restartYes">Ya</button>
+                <button id="restartNo">Tidak</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="message" class="neutral" style="display:none;"></div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
