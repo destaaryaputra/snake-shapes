@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     restartYes = document.getElementById('restartYes');
     restartNo = document.getElementById('restartNo');
     const ui = document.getElementById('ui');
-    const mobileControls = document.getElementById('mobileControls');
     const message = document.getElementById('message');
     const canvas = document.getElementById('gameCanvas');
     const menuRetro = document.getElementById('menuRetro');
@@ -93,7 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     menuRetro.style.display = 'flex';
     ui.style.display = 'none';
-    if (mobileControls) mobileControls.style.display = 'none';
+    message.style.display = 'none';
+    canvas.style.display = 'none';
+    hideRestartDialog();
     message.style.display = 'none';
     canvas.style.display = 'none';
     hideRestartDialog();
@@ -118,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         autoResizeGame();
         gameInstance.start();
         ui.style.display = 'flex';
-        if (mobileControls) mobileControls.style.display = ''; // Let CSS media query decide
         canvas.style.display = 'block';
     });
     exitBtn.addEventListener('click', () => {
@@ -130,14 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
         hideRestartDialog();
         gameInstance.start();
         ui.style.display = 'flex';
-        if (mobileControls) mobileControls.style.display = ''; // Let CSS media query decide
         canvas.style.display = 'block';
     });
     restartNo.addEventListener('click', () => {
         hideRestartDialog();
         menuRetro.style.display = 'flex';
         ui.style.display = 'none';
-        if (mobileControls) mobileControls.style.display = 'none';
         message.style.display = 'none';
         canvas.style.display = 'none';
     });

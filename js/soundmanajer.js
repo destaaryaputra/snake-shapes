@@ -1,12 +1,5 @@
 export class SoundManager {
     constructor() {
-        try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        } catch (e) {
-            console.error("Web Audio API is not supported in this browser.");
-            this.audioContext = null;
-        }
-
         this.audioSources = {
             start: 'assets/sounds/start.mp3',
             benar: 'assets/sounds/benar.mp3',
@@ -21,14 +14,15 @@ export class SoundManager {
         this.playingSounds = new Set(); 
         this.unlocked = false;
         this.muted = false;
+
+        // Pre-load sounds
+        this._initSounds();
     }
 
-    unlock() {
-        if (this.unlocked) return;
-        this.unlocked = true;
-
+    _initSounds() {
         Object.entries(this.audioSources).forEach(([key, src]) => {
             const audio = new Audio(src);
+            audio.preload = 'auto';
             audio.volume = 0.7;
 
             audio.addEventListener('ended', () => {
@@ -41,21 +35,25 @@ export class SoundManager {
 
             this.sounds[key] = audio;
         });
+    }
 
-        const first = this.sounds.start;
-        if (first) {
-            first.muted = true;
-            first.play().catch(() => {}).finally(() => {
-                first.pause();
-                first.currentTime = 0;
-                first.muted = false;
+    unlock() {
+        if (this.unlocked) return;
+        
+        // Play and immediately pause all sounds to unlock them
+        Object.values(this.sounds).forEach(audio => {
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 0;
+            }).catch(() => {
+                // Ignore errors, user might not have interacted yet
             });
-        }
+        });
+
+        this.unlocked = true;
     }
 
     play(type) {
-        this.unlock();
-
         const audio = this.sounds[type];
         if (!audio) return;
 
@@ -72,7 +70,8 @@ export class SoundManager {
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 this.playingSounds.add(type);
-            }).catch(() => {
+            }).catch(e => {
+                console.warn(`Playback failed for ${type}:`, e);
             });
         }
     }

@@ -492,46 +492,6 @@ html, body {
 .wrong { color: var(--error); }
 .neutral { color: var(--warning); }
 
-/* --- Mobile Controls --- */
-#mobileControls {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    z-index: 100;
-}
-
-.control-row {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-sm);
-}
-
-.control-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid var(--accent-primary);
-    background: rgba(6, 182, 212, 0.1);
-    color: var(--accent-primary);
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.control-btn:active {
-    background: var(--accent-primary);
-    color: var(--bg-primary);
-    transform: scale(0.95);
-}
-
 /* --- Responsive Adjustments --- */
 @media (min-width: 1440px) {
     :root {
@@ -617,8 +577,8 @@ html, body {
     }
 
     .game-layout {
-        grid-template-areas: "header" "game" "mobile-controls" "ui";
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-areas: "header" "game" "ui";
+        grid-template-rows: auto 1fr auto;
         gap: var(--spacing-sm);
         padding: var(--spacing-md);
     }
@@ -646,30 +606,24 @@ html, body {
     }
 
     #gameBoardContainer {
-        grid-area: game;
         padding: var(--spacing-md);
         flex-direction: column;
         align-items: center;
     }
 
     #gameBoard {
+        order: 1;
         min-width: 250px;
         min-height: 250px;
     }
 
     #ui {
-        grid-area: ui;
         margin: 0 var(--spacing-md) var(--spacing-md);
         padding: var(--spacing-md);
         max-width: none;
         position: static;
         width: 100%;
         margin-top: var(--spacing-lg);
-    }
-
-    #mobileControls {
-        grid-area: mobile-controls;
-        display: flex;
     }
 
     #target {
@@ -692,14 +646,13 @@ html, body {
     }
 
     .game-layout {
-        grid-template-areas: "header" "game" "mobile-controls" "ui";
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-areas: "header" "game" "ui";
+        grid-template-rows: auto 1fr auto;
         gap: var(--spacing-xs);
         padding: var(--spacing-sm);
     }
 
     #gameHeader {
-        grid-area: header;
         padding: 0 var(--spacing-sm);
         flex-wrap: wrap;
         height: auto;
@@ -746,29 +699,23 @@ html, body {
     }
 
     #gameBoardContainer {
-        grid-area: game;
         padding: var(--spacing-sm);
         flex-direction: column;
         align-items: center;
     }
 
     #gameBoard {
+        order: 1;
         min-width: 200px;
         min-height: 200px;
     }
 
     #ui {
-        grid-area: ui;
         margin: 0 var(--spacing-sm) var(--spacing-sm);
         padding: var(--spacing-md);
         max-width: none;
         position: static;
         margin-top: var(--spacing-md);
-    }
-
-    #mobileControls {
-        grid-area: mobile-controls;
-        display: flex;
     }
 
     #target {

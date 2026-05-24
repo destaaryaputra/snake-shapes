@@ -29,10 +29,7 @@ export class Game {
     }
 
     start() {
-        if (this.sound && this.sound.audioContext && this.sound.audioContext.state === 'suspended') {
-            this.sound.audioContext.resume();
-        }
-
+        this.sound.unlock();
         this.reset();
         this.ui.updateScore(this.score);
         this.ui.updateHighScore(this.highScore);
@@ -160,23 +157,5 @@ export class Game {
                 this.firstInput = false;
             }
         });
-
-        // Mobile controls
-        const btnUp = document.getElementById('ctrlUp');
-        const btnDown = document.getElementById('ctrlDown');
-        const btnLeft = document.getElementById('ctrlLeft');
-        const btnRight = document.getElementById('ctrlRight');
-
-        if (btnUp) btnUp.onclick = () => { this.snake.setDirection(0, -this.gridSize); this._clearFirstInput(); };
-        if (btnDown) btnDown.onclick = () => { this.snake.setDirection(0, this.gridSize); this._clearFirstInput(); };
-        if (btnLeft) btnLeft.onclick = () => { this.snake.setDirection(-this.gridSize, 0); this._clearFirstInput(); };
-        if (btnRight) btnRight.onclick = () => { this.snake.setDirection(this.gridSize, 0); this._clearFirstInput(); };
-    }
-
-    _clearFirstInput() {
-        if (this.firstInput) {
-            this.ui.clearMessage();
-            this.firstInput = false;
-        }
     }
 }
