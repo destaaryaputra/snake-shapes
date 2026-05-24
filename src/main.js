@@ -32,7 +32,7 @@ function autoResizeGame() {
     const availableHeight = Math.max(250, viewportHeight - paddingY);
 
     const GRID_SIZE = 25;
-    const borderTotal = 12;
+    const borderTotal = 10;
 
     let canvasWidth;
     let canvasHeight;
