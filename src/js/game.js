@@ -129,7 +129,7 @@ export class Game {
         const head = this.#snake.getHead();
         if (!head) return false;
 
-        if (head.x < 0 || head.x >= this.#canvas.width || head.y < 0 || head.y >= this.#canvas.height) {
+        if (head.x < 0 || head.x >= this.#canvas.width || head.y < 0 || head.y > this.#canvas.height - this.#gridSize) {
             return 'wall';
         }
 
