@@ -18,12 +18,12 @@ export class SoundManager {
 
         // Daftar nama sound dan file-nya.
         this.#audioSources = {
-            start: 'assets/sounds/start.mp3',
-            benar: 'assets/sounds/benar.mp3',
-            salah: 'assets/sounds/salahmakan.mp3',
-            gameover: 'assets/sounds/gameover.mp3',
-            crash: 'assets/sounds/nabrakdinding.mp3',
-            nabrakbadan: 'assets/sounds/nabrakbadan.mp3'
+            start: 'src/assets/sounds/start.mp3',
+            benar: 'src/assets/sounds/benar.mp3',
+            salah: 'src/assets/sounds/salahmakan.mp3',
+            gameover: 'src/assets/sounds/gameover.mp3',
+            crash: 'src/assets/sounds/nabrakdinding.mp3',
+            nabrakbadan: 'src/assets/sounds/nabrakbadan.mp3'
         };
 
         // Beberapa sound tidak boleh tabrakan.

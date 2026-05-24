@@ -39,13 +39,13 @@ export class Snake extends IDrawable {
         
         // Muat gambar kepala.
         this.#imgHead = new Image();
-        this.#imgHead.src = 'assets/kepala.png';
-        this.#imgHead.onload = () => { this.#headLoaded = true; };
+        this.#imgHead.src = 'src/assets/images/kepala.png';
+        this.#headLoaded = () => { this.#headLoaded = true; };
         this.#imgHead.onerror = () => { console.error('Gagal load kepala.png'); };
         
         // Muat gambar badan.
         this.#imgBody = new Image();
-        this.#imgBody.src = 'assets/badan.png';
+        this.#imgBody.src = 'src/assets/images/badan.png';
         this.#imgBody.onload = () => { this.#bodyLoaded = true; };
         this.#imgBody.onerror = () => { console.error('Gagal load badan.png'); };
     }

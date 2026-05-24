@@ -1,9 +1,9 @@
 import { IDrawable } from './interfaces.js';
 
 const FOOD_IMAGE_SOURCES = {
-    lingkaran: 'assets/lingkaran.png',
-    segitiga: 'assets/segitiga.png',
-    persegi: 'assets/persegi.png'
+    lingkaran: 'src/assets/images/lingkaran.png',
+    segitiga: 'src/assets/images/segitiga.png',
+    persegi: 'src/assets/images/persegi.png'
 };
 
 const imageCache = new Map();
