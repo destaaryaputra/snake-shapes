@@ -13,11 +13,15 @@ export class Snake {
 
         this.dx = gridSize;
         this.dy = 0;
+        this.nextDx = gridSize;
+        this.nextDy = 0;
         this.imgHead = new Image(); this.imgHead.src = 'assets/kepala.jpg';
-        this.imgBody = new Image(); this.imgBody.src = 'assets/badan.png';
+        this.imgBody = new Image(); this.imgBody.src = 'assets/badan.jpg';
     }
 
     move() {
+        this.dx = this.nextDx;
+        this.dy = this.nextDy;
         const head = {x: this.body[0].x + this.dx, y: this.body[0].y + this.dy};
         this.body.unshift(head);
     }
@@ -27,10 +31,12 @@ export class Snake {
     }
 
     setDirection(dx, dy) {
-        if (this.dx === 0 && dx !== 0 || this.dy === 0 && dy !== 0) {
-            this.dx = dx;
-            this.dy = dy;
-        }
+        // Prevent reversal
+        if (this.dx === -dx && dx !== 0) return;
+        if (this.dy === -dy && dy !== 0) return;
+        
+        this.nextDx = dx;
+        this.nextDy = dy;
     }
 
     draw(ctx) {

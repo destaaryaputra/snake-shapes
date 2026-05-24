@@ -34,10 +34,11 @@ export class Game {
         this.ui.updateScore(this.score);
         this.ui.updateHighScore(this.highScore);
         this.ui.updateTarget(this.shapeManager.getCurrentTarget());
-        this.foodList.respawn();
+        this.foodList.respawn(this.snake.body);
         this.sound.play('start');
 
         this.lastTime = performance.now();
+        if (this.gameLoopId) cancelAnimationFrame(this.gameLoopId);
         this.gameLoopId = requestAnimationFrame((timestamp) => this.loop(timestamp));
     }
 
@@ -61,10 +62,7 @@ export class Game {
         this.score = 0;
         this.isGameOver = false;
         this.firstInput = true; 
-        if (this.gameLoopId) {
-            cancelAnimationFrame(this.gameLoopId);
-            this.gameLoopId = null;
-        }
+        this.ui.clearMessage();
     }
 
     checkCollision() {
@@ -74,7 +72,8 @@ export class Game {
             return true;
         }
 
-        for (let i = 2; i < this.snake.body.length; i++) {
+        // Fix: check from index 1 to avoid head-to-head collision which is always true if checked from 0
+        for (let i = 1; i < this.snake.body.length; i++) {
             if (head.x === this.snake.body[i].x && head.y === this.snake.body[i].y) return true;
         }
         return false;
@@ -83,16 +82,14 @@ export class Game {
     _endGame(reason, message, soundKey = 'crash') {
         if (this.isGameOver) return;
         this.isGameOver = true;
-        if (this.gameLoopId) {
-            cancelAnimationFrame(this.gameLoopId);
-            this.gameLoopId = null;
-        }
         this.sound.play(soundKey);
         this.ui.setMessage(message, 'wrong');
         if (typeof this.onGameOver === 'function') this.onGameOver(reason);
     }
 
     update() {
+        this.snake.move();
+
         if (this.checkCollision()) {
             this._endGame('crash', 'Skor akhir: ' + this.score, 'crash');
             return;
@@ -100,8 +97,6 @@ export class Game {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.foodList.draw(this.ctx);
-        
-        this.snake.move();
         
         const head = this.snake.body[0];
         let eaten = false;
@@ -119,9 +114,9 @@ export class Game {
                         this.ui.updateHighScore(this.highScore);
                     }
                     this.ui.updateTarget(this.shapeManager.getCurrentTarget());
-                    this.foodList.respawn();
+                    this.foodList.respawn(this.snake.body);
                 } else {
-                    this._endGame('wrongFood', 'Salah makan! Skor akhir: ' + this.score, 'salah');
+                    this._endGame('wrongFood', 'Salah makan! Skor akhir: ' + this.score, 'salahmakan');
                     return;
                 }
                 break;
@@ -157,5 +152,23 @@ export class Game {
                 this.firstInput = false;
             }
         });
+
+        // Mobile controls
+        const btnUp = document.getElementById('ctrlUp');
+        const btnDown = document.getElementById('ctrlDown');
+        const btnLeft = document.getElementById('ctrlLeft');
+        const btnRight = document.getElementById('ctrlRight');
+
+        if (btnUp) btnUp.onclick = () => { this.snake.setDirection(0, -this.gridSize); this._clearFirstInput(); };
+        if (btnDown) btnDown.onclick = () => { this.snake.setDirection(0, this.gridSize); this._clearFirstInput(); };
+        if (btnLeft) btnLeft.onclick = () => { this.snake.setDirection(-this.gridSize, 0); this._clearFirstInput(); };
+        if (btnRight) btnRight.onclick = () => { this.snake.setDirection(this.gridSize, 0); this._clearFirstInput(); };
+    }
+
+    _clearFirstInput() {
+        if (this.firstInput) {
+            this.ui.clearMessage();
+            this.firstInput = false;
+        }
     }
 }

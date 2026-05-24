@@ -16,7 +16,7 @@ export class FoodList {
         this.respawn();
     }
 
-    respawn() {
+    respawn(snakeBody = []) {
         this.foods = [];
 
         const maxX = this.canvasWidth - this.gridSize;
@@ -29,14 +29,18 @@ export class FoodList {
                 x = Math.floor(Math.random() * ((maxX / this.gridSize) + 1)) * this.gridSize;
                 y = Math.floor(Math.random() * ((maxY / this.gridSize) + 1)) * this.gridSize;
                 attempts++;
-            } while (this.isOverlapping(x, y) && attempts < 50);
+            } while (this.isOverlapping(x, y, snakeBody) && attempts < 50);
 
             this.foods.push({ type, x, y });
         }
     }
 
-    isOverlapping(x, y) {
-        return this.foods.some(food => food.x === x && food.y === y);
+    isOverlapping(x, y, snakeBody = []) {
+        const foodOverlap = this.foods.some(food => food.x === x && food.y === y);
+        if (foodOverlap) return true;
+
+        const snakeOverlap = snakeBody.some(segment => segment.x === x && segment.y === y);
+        return snakeOverlap;
     }
 
     updateBoundaries(canvasWidth, canvasHeight) {
